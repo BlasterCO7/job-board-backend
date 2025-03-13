@@ -4,7 +4,11 @@ import pool from "./db.js"; // PostgreSQL connection
 const scrapeJobs = async () => {
   console.log("🚀 Starting job scraping...");
 
-  const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox"] });
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"]
+  });
+  
   const page = await browser.newPage();
 
   // Set User-Agent to prevent detection
