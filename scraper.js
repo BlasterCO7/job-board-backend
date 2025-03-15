@@ -1,10 +1,11 @@
-import puppeteer from "puppeteer";
+import puppeteer from 'puppeteer';  // Import puppeteer-core
 import pool from "./db.js"; // PostgreSQL connection
 
 const scrapeJobs = async () => {
   console.log("🚀 Starting job scraping...");
 
   const browser = await puppeteer.launch({
+    executablePath: puppeteer.executablePath(),  // Ensure it uses the correct path
     headless: true,
     args: ["--no-sandbox", "--disable-setuid-sandbox"]
   });
@@ -15,12 +16,6 @@ const scrapeJobs = async () => {
   await page.setUserAgent(
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/109.0"
   );
-
-  // Go to Naukri Product Manager Jobs Page
-  // await page.goto("https://www.naukri.com/product-manager-jobs", {
-  //   waitUntil: "networkidle2", // Ensures all requests are completed
-  //   timeout: 60000,
-  // });
 
   await page.goto("https://www.naukri.com/sales-manager-jobs", {
     waitUntil: "networkidle2", // Ensures all requests are completed
@@ -61,12 +56,9 @@ const scrapeJobs = async () => {
     } catch (error) {
         console.error("❌ Error inserting job:", error.message);
     }
-}
-
+  }
 
   console.log("✅ Jobs saved to the database!");
 };
+
 export default scrapeJobs;
-
-
-scrapeJobs();

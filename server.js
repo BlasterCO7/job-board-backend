@@ -3,13 +3,11 @@ import cors from "cors";
 import dotenv from "dotenv";
 import jobRoutes from "./routes/jobRoutes.js";
 import scrapeJobs from "./scraper.js";  
-
 import { execSync } from "child_process";
 
 console.log("🔄 Installing Chrome for Puppeteer...");
 execSync("npx puppeteer browsers install chrome", { stdio: "inherit" });
 console.log(" Chrome installed!");
-
 
 dotenv.config();
 const app = express();
